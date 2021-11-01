@@ -7,6 +7,7 @@
 #include "ServerSetup.h"
 #include "readCurrentandPuls.h"
 #include "serialOut.h"
+#include "tachometer.h"
 #include "variables.h"
 
 
@@ -16,11 +17,11 @@ int loops = 0;
 
 void setup() {
   delay(200);
-  
+
   setCpuFrequencyMhz(240);    //CPU Frequenz auf 240MHz stellen
 
   //Ein- und Ausgänge setzen
-  pinMode(2, OUTPUT);
+  pinMode(ledPin, OUTPUT);
   pinMode(loopTimingPin, OUTPUT);
   pinMode(currentPin1, INPUT);
   pinMode(currentPin2, INPUT);
@@ -41,29 +42,30 @@ void setup() {
   Serial.println();
   delay(100);
   taskSetup();
-  
+
   delay(4000);
 }
 
 void loop() {
-  digitalWrite(loopTimingPin, HIGH); 
-  digitalWrite(2, puls);    //bereinigter Magnetsensor Output
+  digitalWrite(loopTimingPin, HIGH);
+  digitalWrite(ledPin, puls);    //bereinigter Magnetsensor Output
+  readSpeed();
   readCurrent1();
   readCurrent2();
   readPulseTime();
-  if(loops>=20){    //nur alle 20 Durchgänge serielle Ausgabe
+  if (loops >= 20) { //nur alle 20 Durchgänge serielle Ausgabe
     serialOutput();
-    loops = 0; 
+    loops = 0;
   } else {
-    ++loops;  
-  }  
+    ++loops;
+  }
   digitalWrite(loopTimingPin, LOW);
 }
 
 
 
 void taskSetup() {
-xTaskCreatePinnedToCore(
+  xTaskCreatePinnedToCore(
     serverSetup,
     "Task1",
     64000,
