@@ -26,18 +26,18 @@ void serverSetup( void * parameter ) {
   Serial.print("AP IP address: ");
   Serial.println(IP);
 
-  server.on("/strom1", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/strom1", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send_P(200, "text/plain", readStrom1().c_str());
   });
-  server.on("/strom2", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/strom2", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send_P(200, "text/plain", readStrom2().c_str());
   });
-  server.on("/puls", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/puls", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send_P(200, "text/plain", readPuls().c_str());
   });
-  
+
   // Start server
-  server.begin();  
+  server.begin();
   delay(100);
   Serial.printf("Webserver running on Core %d\n ", xPortGetCoreID());
   Serial.println();

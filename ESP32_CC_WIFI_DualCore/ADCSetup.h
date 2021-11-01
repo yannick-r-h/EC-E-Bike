@@ -4,7 +4,7 @@ void manualAdcSetup() {
 
   //ADC konfigurieren
   analogReadResolution(12); //ADC Auflösung 12bit
-  //analogSetCycles(8);  
+  //analogSetCycles(8);
   //analogSetSamples(1);
   //analogSetClockDiv(1);
   //analogSetPinAttenuation(currentpin1, ADC_11db);
