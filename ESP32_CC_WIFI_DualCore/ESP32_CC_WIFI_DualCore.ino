@@ -21,12 +21,17 @@ void setup() {
   setCpuFrequencyMhz(240);    //CPU Frequenz auf 240MHz stellen
 
   //Ein- und Ausgänge setzen
-  pinMode(ledPin, OUTPUT);
-  pinMode(loopTimingPin, OUTPUT);
   pinMode(currentPin1, INPUT);
   pinMode(currentPin2, INPUT);
-  pinMode(pulsPin, INPUT);
+  pinMode(pulsPin1, INPUT);
+  pinMode(pulsPin2, INPUT);
   pinMode(steuerInputPin, INPUT);
+  pinMode(irgendeinPin, INPUT);
+
+  pinMode(steuerOutputPin1, OUTPUT);
+  pinMode(steuerOutputPin2, OUTPUT);
+  pinMode(loopTimingPin, OUTPUT);
+  pinMode(ledPin, OUTPUT);
 
   digitalWrite(loopTimingPin, LOW);
 
@@ -48,11 +53,12 @@ void setup() {
 
 void loop() {
   digitalWrite(loopTimingPin, HIGH);
-  digitalWrite(ledPin, puls);    //bereinigter Magnetsensor Output
+  digitalWrite(ledPin, puls1);    //bereinigter Magnetsensor Output
   readSpeed();
-  readCurrent1();
-  readCurrent2();
-  readPulseTime();
+  current1 = readCurrent(currentPin1, currentCal1, shunt1);
+  current2 = readCurrent(currentPin2, currentCal2, shunt2);
+  puls1 = readPulse(pulsPin1);
+  puls2 = readPulse(pulsPin2);
   if (loops >= 20) { //nur alle 20 Durchgänge serielle Ausgabe
     serialOutput();
     loops = 0;

@@ -4,7 +4,7 @@
 void readSpeed() {
 
 
-  if (prePuls == 0 && puls == 1) {
+  if (prePuls == 0 && puls1 == 1) {
     pulsStop = micros();
     unsigned long temp = pulsStop - pulsStart;
     pulsStart = micros();
@@ -25,5 +25,5 @@ void readSpeed() {
   }
 
 
-  prePuls = puls;
+  prePuls = puls1;
 }

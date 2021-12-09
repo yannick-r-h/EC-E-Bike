@@ -11,8 +11,12 @@ String readStrom2() {
   return String(current2);
 }
 
-String readPuls() {
-  return String(puls);
+String readPuls1() {
+  return String(puls1);
+}
+
+String readPuls2() {
+  return String(puls2);
 }
 
 void serverSetup( void * parameter ) {
@@ -32,8 +36,11 @@ void serverSetup( void * parameter ) {
   server.on("/strom2", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send_P(200, "text/plain", readStrom2().c_str());
   });
-  server.on("/puls", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send_P(200, "text/plain", readPuls().c_str());
+  server.on("/puls1", HTTP_GET, [](AsyncWebServerRequest * request) {
+    request->send_P(200, "text/plain", readPuls1().c_str());
+  });
+  server.on("/puls2", HTTP_GET, [](AsyncWebServerRequest * request) {
+    request->send_P(200, "text/plain", readPuls2().c_str());
   });
 
   // Start server

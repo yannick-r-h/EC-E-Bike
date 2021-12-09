@@ -1,32 +1,32 @@
 #include "variables.h"
 
-void readCurrent1() {
-  current1intermediate = 0;
+double readCurrent(const byte pin, const double cal, const double shunt) {
+  uint64_t currentintermediate = 0;
   for (int i = 0; i <= measurements; i++) {
-    current1intermediate = (current1intermediate + (analogRead(currentPin1)));
+    currentintermediate = (currentintermediate + (analogRead(pin)));
   }
-  current1 = (current1intermediate / (measurements * cal1 * shunt1));
+  return (double)(currentintermediate / (measurements * cal * shunt));
 }
 
-void readCurrent2() {
-  current2intermediate = 0;
-  for (int i = 0; i <= measurements; i++) {
-    current2intermediate = (current2intermediate + (analogRead(currentPin2)));
-  }
-  current2 = (current2intermediate / (measurements * cal2 * shunt2));
-}
 
-void readPulseTime() {
-  pulsIntermediate = 0;
+bool readPulse(const byte pin) {
+  uint64_t pulsIntermediate = 0;
   for (int i = 0; i <= measurements; i++) {
-    pulsIntermediate = (pulsIntermediate + (analogRead(pulsPin)));
+    pulsIntermediate = (pulsIntermediate + (analogRead(pin)));
   }
-  pulsAnalog = (pulsIntermediate / measurements);
+  uint32_t pulsAnalog = (pulsIntermediate / measurements);
 
   if (pulsAnalog > 3500) { //oberer Schwellwert fuer Aenderung
-    puls = 1;
+    return 1;
   }
   else if (pulsAnalog < 2600) { //unterer Schwellwert fuer Aenderung
-    puls = 0;
+    return 0;
+  }
+  else {
+    if(pin == pulsPin1){
+      return puls1;  
+    } else {
+      return puls2;
+    }
   }
 }
