@@ -11,10 +11,12 @@ const char* password = "123456789";     //WLAN Passwort
 //Inputs
 const byte currentPin1 = 36;        //ADC0, für Shunt-Messung von 0-1000mV
 const byte currentPin2 = 39;        //ADC3, für Shunt-Messung von 0-1000mV
-const byte pulsPin1 = 34;           //ADC6, für Puls-Messung von 0-1000mV
-const byte pulsPin2 = 35;           //ADC7, für Puls-Messung von 0-1000mV
+const byte pulsPin1 = 34;           //ADC6, für Puls-Messung von 0-1000mV bzw. digital
+const byte pulsPin2 = 35;           //ADC7, für Puls-Messung von 0-1000mV bzw. digital
 const byte steuerInputPin = 32;     //ADC4, für Steuersignal Eingang von 0-1000mV
-const byte irgendeinPin = 33;       //ADC5, für irgendeinen Eingang von 0-1000mV
+const byte pedalPin = 33;           //ADC5, für irgendeinen Eingang von 0-1000mV bzw. digital
+const byte bremsPin1 = 4;           //ADC10, für Bremsen-Messung von 0-1000mV
+const byte bremsPin2 = 0;           //ADC11, für Bremsen-Messung von 0-1000mV
 //Outputs
 const byte steuerOutputPin1 = 25;   //DAC1, für Steuersignal von x-xxxxmV
 const byte steuerOutputPin2 = 26;   //DAC2, für Steuersignal von x-xxxxmV

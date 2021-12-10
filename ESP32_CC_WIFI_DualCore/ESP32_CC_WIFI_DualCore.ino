@@ -26,7 +26,9 @@ void setup() {
   pinMode(pulsPin1, INPUT);
   pinMode(pulsPin2, INPUT);
   pinMode(steuerInputPin, INPUT);
-  pinMode(irgendeinPin, INPUT);
+  pinMode(pedalPin, INPUT);
+  pinMode(bremsPin1, INPUT);
+  pinMode(bremsPin2, INPUT);
 
   pinMode(steuerOutputPin1, OUTPUT);
   pinMode(steuerOutputPin2, OUTPUT);
@@ -54,18 +56,22 @@ void setup() {
 void loop() {
   digitalWrite(loopTimingPin, HIGH);
   digitalWrite(ledPin, puls1);    //bereinigter Magnetsensor Output
+  
   readSpeed();
   current1 = readCurrent(currentPin1, currentCal1, shunt1);
   current2 = readCurrent(currentPin2, currentCal2, shunt2);
   puls1 = readPulse(pulsPin1);
   puls2 = readPulse(pulsPin2);
+  
   if (loops >= 20) { //nur alle 20 Durchgänge serielle Ausgabe
     serialOutput();
     loops = 0;
   } else {
     ++loops;
   }
+  
   digitalWrite(loopTimingPin, LOW);
+  
 }
 
 

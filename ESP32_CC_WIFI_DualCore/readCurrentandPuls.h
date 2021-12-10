@@ -8,7 +8,8 @@ double readCurrent(const byte pin, const double cal, const double shunt) {
   return (double)(currentintermediate / (measurements * cal * shunt));
 }
 
-
+/*
+//readPulse analog
 bool readPulse(const byte pin) {
   uint64_t pulsIntermediate = 0;
   for (int i = 0; i <= measurements; i++) {
@@ -29,4 +30,10 @@ bool readPulse(const byte pin) {
       return puls2;
     }
   }
+}
+*/
+
+//readPulse digital
+bool readPulse(const byte pin){
+  return digitalRead(pin);
 }

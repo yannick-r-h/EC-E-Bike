@@ -17,8 +17,10 @@ void manualAdcSetup() {
   
   adcAttachPin(currentPin1);
   adcAttachPin(currentPin2);
-  adcAttachPin(pulsPin1);
-  adcAttachPin(pulsPin2);
+  //adcAttachPin(pulsPin1);
+  //adcAttachPin(pulsPin2);
   adcAttachPin(steuerInputPin);
-  adcAttachPin(irgendeinPin);
+  //adcAttachPin(pedalPin);
+  adcAttachPin(bremsPin1);
+  adcAttachPin(bremsPin2);
 }
