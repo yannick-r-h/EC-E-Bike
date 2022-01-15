@@ -4,9 +4,9 @@
 void readSpeed() {
 
 
-  if (prePuls == 0 && puls == 1) {
+  if (prePuls == 0 && puls1 == 1) {
     pulsStop = micros();
-    unsigned long temp = pulsStop - pulsStart;
+    uint32_t temp = pulsStop - pulsStart;
     pulsStart = micros();
     for (int i = 0; i < 8; ++i) {
       pulsTime[8 - i] = pulsTime[7 - i];
@@ -25,5 +25,5 @@ void readSpeed() {
   }
 
 
-  prePuls = puls;
+  prePuls = puls1;
 }
