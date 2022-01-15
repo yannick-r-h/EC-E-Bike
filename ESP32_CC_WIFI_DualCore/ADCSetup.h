@@ -14,13 +14,10 @@ void manualAdcSetup() {
   analogSetAttenuation(ADC_0db); //ADC Eingangsbereich 0-1000mV
 
   //ADC-Eingaenge setzen
-  
+  adcAttachPin(voltagePin);
   adcAttachPin(currentPin1);
   adcAttachPin(currentPin2);
-  //adcAttachPin(pulsPin1);
-  //adcAttachPin(pulsPin2);
   adcAttachPin(steuerInputPin);
-  //adcAttachPin(pedalPin);
   adcAttachPin(bremsPin1);
   adcAttachPin(bremsPin2);
 }
