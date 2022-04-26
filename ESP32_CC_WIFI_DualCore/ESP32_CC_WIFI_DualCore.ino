@@ -13,15 +13,11 @@
 
 
 
-TaskHandle_t ControlLoop;
-TaskHandle_t ServerTask;
-TaskHandle_t SDTask;
-
 
 void setup() {
   delay(200);
 
-  setCpuFrequencyMhz(240);    //CPU Frequenz auf 240MHz stellen
+  setCpuFrequencyMhz(240);            //CPU Frequenz auf 240MHz stellen
 
   //Ein- und Ausgänge setzen
   pinMode(voltagePin, INPUT);
@@ -29,20 +25,21 @@ void setup() {
   pinMode(currentPin2, INPUT);
   pinMode(pulsPin1, INPUT);
   pinMode(pulsPin2, INPUT);
-  pinMode(steuerInputPin, INPUT);
   pinMode(pedalPin, INPUT);
   pinMode(bremsPin1, INPUT);
   pinMode(bremsPin2, INPUT);
 
   pinMode(steuerOutputPin1, OUTPUT);
   pinMode(steuerOutputPin2, OUTPUT);
-  pinMode(debugTimingPin, OUTPUT);
+  pinMode(debugTimingPin1, OUTPUT);
+  pinMode(debugTimingPin2, OUTPUT);
 
-  digitalWrite(debugTimingPin, LOW);
+  digitalWrite(debugTimingPin1, LOW);
+  digitalWrite(debugTimingPin2, LOW);
 
-  manualAdcSetup();
+  manualAdcSetup();                   //ADC Konfiguration, siehe ADCSetup.h
 
-  Serial.begin(115200);  // Serial port for debugging purposes
+  Serial.begin(115200);               // Serial port for debugging purposes
   Serial.println();
   Serial.println();
   Serial.print("CPU-Frequency: ");
@@ -52,7 +49,7 @@ void setup() {
   delay(100);
   Serial.printf("Main running on Core %d\n ", xPortGetCoreID());
   delay(100);
-  taskSetup();
+  taskSetup();                        //Multitasking Setup, siehe unten
 
   delay(4000);
 }
@@ -60,42 +57,42 @@ void setup() {
 void loop() {
   //digitalWrite(debugTimingPin, !digitalRead(debugTimingPin));
   serialOutput();
-  vTaskDelay(pdMS_TO_TICKS(25));
+  vTaskDelay(pdMS_TO_TICKS(25));      //25ms Delay, erlaubt andere Tasks waehrend dem Warten auszufuehren
 }
 
 
 
 void taskSetup() {
-
+  
   xTaskCreatePinnedToCore(
     controlLoop,          //Funktionsname
     "ControlLoop",        //Name fuer Debug
-    64000,                //Groesse des Stacks
+    1000,                 //Groesse des Stacks
     NULL,                 //Parameter
-    12,                   //Prioritaet, kleiner = unwichtiger
-    &ControlLoop,         //Task handle
+    8,                   //Prioritaet, kleiner = unwichtiger
+    &ControlLoop_Handler, //Task handle
     0);                   //Kern
 
-  delay(100);             //Pause zum starten des Tasks
- 
+  vTaskDelay(100);
+
   xTaskCreatePinnedToCore(
     sdSetup,              //Funktionsname
     "SDTask",             //Name fuer Debug
-    64000,                //Groesse des Stacks
+    8000,                 //Groesse des Stacks
     NULL,                 //Parameter
     4,                    //Prioritaet
-    &SDTask,              //Task handle
+    &SDTask_Handler,      //Task handle
     1);                   //Kern
 
-  delay(100);             //Pause zum starten des Tasks
+  vTaskDelay(100);             //Pause zum starten des Tasks
 
   xTaskCreatePinnedToCore(
     serverSetup,          //Funktionsname
     "ServerTask",         //Name fuer Debug
-    64000,                //Groesse des Stacks
+    16000,                //Groesse des Stacks
     NULL,                 //Parameter
     4,                    //Prioritaet, kleiner = unwichtiger
-    &ServerTask,          //Task handle
+    &ServerTask_Handler,  //Task handle
     1);                   //Kern, Kern1 standardmaessig fuer Loop, Kern0 also frei
 
 }
