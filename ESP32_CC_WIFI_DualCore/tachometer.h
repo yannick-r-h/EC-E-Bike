@@ -3,7 +3,7 @@
 //Funktioniert nicht (Velocity meist Null), aktualisiert nur bei Pulsen --> gibt theoretisch auch bei Stillstand noch vorherige Geschwindigkeit aus
 
 
-void readSpeed(bool puls, bool prePuls, uint32_t pulsStart, uint32_t pulsStop,uint32_t pulsTime[], float *velocity_p) {
+void readSpeed(bool puls, bool prePuls, uint32_t& pulsStart, uint32_t& pulsStop,uint32_t pulsTime[], float *velocity_p) {
 
 
   if (prePuls == 0 && puls == 1) {
